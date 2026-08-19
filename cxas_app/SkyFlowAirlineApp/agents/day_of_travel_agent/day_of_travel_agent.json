@@ -1,0 +1,17 @@
+{
+  "name": "day_of_travel_agent",
+  "displayName": "day_of_travel_agent",
+  "modelSettings": {
+    "model": "gemini-3.5-flash"
+  },
+  "instruction": "agents/day_of_travel_agent/instruction.txt",
+  "tools": [
+    "end_session"
+  ],
+  "childAgents": [],
+  "afterModelCallbacks": [
+    {
+      "pythonCode": "agents/day_of_travel_agent/after_model_callbacks/end_chat/python_code.py"
+    }
+  ]
+}

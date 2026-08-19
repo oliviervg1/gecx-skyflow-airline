@@ -1,0 +1,106 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# SkyFlow Airlines Canonical Golden Evaluations
+
+common_session_parameters:
+  intent_id: ""
+
+conversations:
+  # Scenario 1: Day of Travel Intent Routing & Under Construction Termination
+  - conversation: day_of_travel_routing
+    tags: [P0, golden, day_of_travel]
+    turns:
+      - user: "What gate does flight SK101 leave from and is it on time?"
+        agent: "You've reached the Day of Travel agent. I am currently under construction and will now terminate the conversation."
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: "DAY_OF_TRAVEL"
+          - action: transfer_to_agent
+            args:
+              agent: "day_of_travel_agent"
+    expectations:
+      - "The agent must classify the intent as DAY_OF_TRAVEL and transfer to day_of_travel_agent."
+      - "The customer must receive the under-construction notice from the Day of Travel agent."
+
+  # Scenario 2: Ancillary Sales Intent Routing & Under Construction Termination
+  - conversation: sales_upsell_routing
+    tags: [P0, golden, sales]
+    turns:
+      - user: "I would like to add fast track security and an extra checked bag to my flight"
+        agent: "You've reached the Sales agent. I am currently under construction and will now terminate the conversation."
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: "SALES"
+          - action: transfer_to_agent
+            args:
+              agent: "sales_agent"
+    expectations:
+      - "The agent must classify the intent as SALES and transfer to sales_agent."
+      - "The customer must receive the under-construction notice from the Sales agent."
+
+  # Scenario 3: General FAQ Policy Routing & Under Construction Termination
+  - conversation: general_faq_routing
+    tags: [P0, golden, faq]
+    turns:
+      - user: "What are your carry-on baggage dimension limits?"
+        agent: "You've reached the General FAQ agent. I am currently under construction and will now terminate the conversation."
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: "GENERAL_FAQ"
+          - action: transfer_to_agent
+            args:
+              agent: "general_faq_agent"
+    expectations:
+      - "The agent must classify the request as GENERAL_FAQ and route to general_faq_agent."
+      - "The customer must receive the under-construction notice from the General FAQ agent."
+
+  # Scenario 4: Ambiguous Inquiry Clarification & 2-Turn Recovery
+  - conversation: ambiguity_clarification_and_recovery
+    tags: [P1, golden, clarification]
+    turns:
+      - user: "I need some help with my trip"
+        agent: "Certainly! Could you please let me know what you need help with today, such as flight status, travel extras like baggage, or general airline policies?"
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: ""
+      - user: "Is my flight SK204 delayed today?"
+        agent: "You've reached the Day of Travel agent. I am currently under construction and will now terminate the conversation."
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: "DAY_OF_TRAVEL"
+          - action: transfer_to_agent
+            args:
+              agent: "day_of_travel_agent"
+    expectations:
+      - "On turn 1, the agent must clarify options when the intent is unclear."
+      - "On turn 2, the agent must classify DAY_OF_TRAVEL and transfer to day_of_travel_agent."
+
+  # Scenario 5: Out of Scope Protection
+  - conversation: out_of_scope_boundary_protection
+    tags: [P1, golden, out_of_scope]
+    turns:
+      - user: "Can you order a pepperoni pizza to terminal 2?"
+        agent: "I'm sorry, I can only assist with SkyFlow Airlines flights, day-of-travel information, travel add-ons, and airline policies. How may I assist you with your flight today?"
+        tool_calls:
+          - action: classify_airline_intent
+            args:
+              intent_id: ""
+    expectations:
+      - "The agent must clarify supported airline services when the request is out of scope."

@@ -1,0 +1,17 @@
+{
+  "name": "sales_agent",
+  "displayName": "sales_agent",
+  "modelSettings": {
+    "model": "gemini-3.5-flash"
+  },
+  "instruction": "agents/sales_agent/instruction.txt",
+  "tools": [
+    "end_session"
+  ],
+  "childAgents": [],
+  "afterModelCallbacks": [
+    {
+      "pythonCode": "agents/sales_agent/after_model_callbacks/end_chat/python_code.py"
+    }
+  ]
+}

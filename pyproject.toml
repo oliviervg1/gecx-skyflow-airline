@@ -1,0 +1,15 @@
+[project]
+name = "skyflow-airline-booking"
+version = "0.1.0"
+description = "SkyFlow Airlines GECX Agent Studio Reference Implementation"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0",
+    "pytest>=8.0.0",
+    "cxas-scrapi",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["evals"]
+python_files = ["test_*.py"]

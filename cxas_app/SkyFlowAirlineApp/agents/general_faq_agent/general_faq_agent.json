@@ -1,0 +1,17 @@
+{
+  "name": "general_faq_agent",
+  "displayName": "general_faq_agent",
+  "modelSettings": {
+    "model": "gemini-3.5-flash"
+  },
+  "instruction": "agents/general_faq_agent/instruction.txt",
+  "tools": [
+    "end_session"
+  ],
+  "childAgents": [],
+  "afterModelCallbacks": [
+    {
+      "pythonCode": "agents/general_faq_agent/after_model_callbacks/end_chat/python_code.py"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# SkyFlow Airlines Intent Catalogue & Router Scope Specification
+#
+# Single source of truth for the 3 sub-agent domain intents.
+# The compiler script `scripts/generate_intents.py` compiles this file into:
+#   1. Literal[...] enum on classify_airline_intent()
+#   2. Structured docstrings for model guidance
+#   3. Python routing table with target subagent and domain mappings
+
+- id: DAY_OF_TRAVEL
+  gloss: flight status, delays, gates, terminal directions, baggage claim carousels, boarding passes
+  description: Customer requests related to day-of-departure operations including flight status and delays, gate assignments, concourse and terminal navigation, baggage reclaim carousels, boarding times and groups, and airport check-in desks.
+  target_agent: "day_of_travel_agent"
+  domain: "DAY_OF_TRAVEL"
+
+- id: SALES
+  gloss: fast track security, checked bags, seat upgrades, lounge passes, comfort bundles
+  description: Customer requests related to purchasing add-ons and upgrades including Fast Track priority security passes, additional checked luggage allowance, extra legroom seat selection, Executive Lounge day passes, and all-in-one comfort bundles.
+  target_agent: "sales_agent"
+  domain: "SALES"
+
+- id: GENERAL_FAQ
+  gloss: baggage size/weight limits, name changes, ticket cancellations, refunds, pet travel, policies
+  description: General airline policy and rule inquiries including cabin and checked baggage dimensions and weight limits, ticket spelling corrections and name change fees, cancellations and refund policies, traveling with pets, infants, and special mobility assistance.
+  target_agent: "general_faq_agent"
+  domain: "GENERAL_FAQ"

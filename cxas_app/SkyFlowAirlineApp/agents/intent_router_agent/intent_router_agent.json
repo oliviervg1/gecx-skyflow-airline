@@ -1,0 +1,22 @@
+{
+  "name": "intent_router_agent",
+  "displayName": "intent_router_agent",
+  "modelSettings": {
+    "model": "gemini-3.5-flash"
+  },
+  "instruction": "agents/intent_router_agent/instruction.txt",
+  "tools": [
+    "classify_airline_intent",
+    "end_session"
+  ],
+  "childAgents": [
+    "day_of_travel_agent",
+    "sales_agent",
+    "general_faq_agent"
+  ],
+  "afterModelCallbacks": [
+    {
+      "pythonCode": "agents/intent_router_agent/after_model_callbacks/end_chat/python_code.py"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "name": "skyflow-airline-assistant",
+  "displayName": "SkyFlowAirlineApp",
+  "description": "SkyFlow Airlines multi-agent conversational customer service assistant featuring a Tool-First intent router and dedicated domain sub-agents.",
+  "rootAgent": "intent_router_agent",
+  "languageSettings": {
+    "defaultLanguageCode": "en-GB",
+    "supportedLanguageCodes": [
+      "en-US"
+    ],
+    "enableMultilingualSupport": true
+  },
+  "audioProcessingConfig": {
+    "inactivityTimeout": "8s",
+    "synthesizeSpeechConfigs": {
+      "en-GB": {
+        "speakingRate": 1.0
+      },
+      "en-US": {
+        "speakingRate": 1.0
+      }
+    }
+  },
+  "loggingSettings": {
+    "conversationLoggingSettings": {
+      "retentionWindow": "31536000s"
+    },
+    "cloudLoggingSettings": {
+      "enableCloudLogging": true
+    }
+  },
+  "modelSettings": {
+    "model": "gemini-3.5-flash"
+  },
+  "variableDeclarations": [
+    {
+      "name": "chat_complete",
+      "description": "true once a tool or exit callback has set terminal status",
+      "schema": {
+        "type": "STRING",
+        "default": "false",
+        "required": []
+      }
+    },
+    {
+      "name": "intent_id",
+      "description": "Classified intent identifier from SkyFlow Intent Catalogue",
+      "schema": {
+        "type": "STRING",
+        "default": "",
+        "required": []
+      }
+    },
+    {
+      "name": "target_agent",
+      "description": "The child agent destination computed by the intent router tool",
+      "schema": {
+        "type": "STRING",
+        "default": "",
+        "required": []
+      }
+    },
+    {
+      "name": "domain",
+      "description": "Active domain: DAY_OF_TRAVEL, SALES, or GENERAL_FAQ",
+      "schema": {
+        "type": "STRING",
+        "default": "",
+        "required": []
+      }
+    },
+    {
+      "name": "unclear_retry_count",
+      "description": "Vague or ambiguous intent instances, counted before terminating",
+      "schema": {
+        "type": "STRING",
+        "default": "0",
+        "required": []
+      }
+    },
+    {
+      "name": "out_of_scope_retry_count",
+      "description": "Out-of-scope requests, counted before disconnecting",
+      "schema": {
+        "type": "STRING",
+        "default": "0",
+        "required": []
+      }
+    },
+    {
+      "name": "end_reason",
+      "description": "Reason code when concluding chat session (e.g. COMPLETED, OUT_OF_SCOPE, UNDER_CONSTRUCTION)",
+      "schema": {
+        "type": "STRING",
+        "default": "",
+        "required": []
+      }
+    }
+  ],
+  "defaultChannelProfile": {
+    "channelType": "API"
+  },
+  "evaluationMetricsThresholds": {
+    "goldenEvaluationMetricsThresholds": {
+      "turnLevelMetricsThresholds": {
+        "semanticSimilaritySuccessThreshold": 3,
+        "overallToolInvocationCorrectnessThreshold": 1.0
+      },
+      "toolMatchingSettings": {
+        "extraToolCallBehavior": "ALLOW"
+      }
+    },
+    "goldenHallucinationMetricBehavior": "DISABLED"
+  },
+  "timeZoneSettings": {
+    "timeZone": "Europe/London"
+  },
+  "toolExecutionMode": "SEQUENTIAL"
+}

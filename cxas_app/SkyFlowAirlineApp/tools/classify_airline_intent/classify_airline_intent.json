@@ -1,0 +1,10 @@
+{
+  "name": "classify_airline_intent",
+  "displayName": "classify_airline_intent",
+  "pythonFunction": {
+    "name": "classify_airline_intent",
+    "pythonCode": "tools/classify_airline_intent/python_function/python_code.py",
+    "description": "Classifies incoming airline customer intent against the SkyFlow Intent Base, records session state, and computes routing to specialized sub-agents."
+  },
+  "executionType": "SYNCHRONOUS"
+}

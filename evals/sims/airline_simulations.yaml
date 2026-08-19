@@ -1,0 +1,37 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# End-to-End Goal Simulations for SkyFlow Airline Assistant
+
+simulations:
+  - name: sim_day_of_travel_gate_and_status
+    description: Passenger inquires about flight gate and status for flight SK101, routes to day of travel agent.
+    user_goal: "Find out where flight SK101 departs from and if it is on time."
+    expected_sub_agent: "day_of_travel_agent"
+    expected_tool_sequence:
+      - classify_airline_intent
+
+  - name: sim_sales_fast_track_purchase
+    description: Passenger inquires about Fast Track security, routes to sales agent.
+    user_goal: "Add Fast Track security pass to booking."
+    expected_sub_agent: "sales_agent"
+    expected_tool_sequence:
+      - classify_airline_intent
+
+  - name: sim_faq_baggage_and_pet_rules
+    description: Passenger asks about carry on dimensions and pet travel rules, routes to general FAQ agent.
+    user_goal: "Learn about baggage limits and flying with a dog."
+    expected_sub_agent: "general_faq_agent"
+    expected_tool_sequence:
+      - classify_airline_intent
